@@ -17,7 +17,7 @@
 			}
 		}?>
 		<div class="col-xs-6 col-xs-offset-3">
-			<a href="?page=admin&action=pull_git" type="button" class="btn btn-primary btn-lg btn-block">Git Pull To gitHub Origin master</a>
+			<?=($_SERVER['HTTP_HOST'] != "localhost")?'<a href="?page=admin&action=pull_git" type="button" class="btn btn-primary btn-lg btn-block">Git Pull To gitHub Origin master</a>':''?>
 			<a href="?page=admin&action=edit_config_app" type="button" class="btn btn-primary btn-lg btn-block">Edit Option Config</a>
 		</div>
 
