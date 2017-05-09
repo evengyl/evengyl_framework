@@ -36,7 +36,7 @@ if(Config::$is_connect)
 		__TPL_top_head__
 	</head>
 	<body>
-		__MOD_header__test
+		__MOD_header__
 		
 		<?  $route = new router($_GET['page']); ?>
 			
