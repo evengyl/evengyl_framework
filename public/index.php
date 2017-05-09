@@ -1,14 +1,15 @@
 <? session_start(); ?>
 <!DOCTYPE html>
 <?
-//require de base avec les fonciton diverse et le loader, la fonction microtime est la uniquement pour le temps d'execution des requete pour optimiser
-require "../app/core/app_min_load.php";
 
+
+//require de base avec les fonciton diverse et le loader, la fonction microtime est la uniquement pour le temps d'execution des requete pour optimiser
+require "../app/includes/app_min_load.php";
+start_exec_page_timer();
 
 //mise en route de l'autoload
 
 Autoloader::register(); 
-start_exec_page_timer();
 $_app = array(); //contiendra tout les modules de l'applications appelé sur la page. apres execution de celui ci, il est placé dans l'app.
 
 //mise en route de la session
@@ -81,3 +82,4 @@ if(!empty($_POST))
 
 
 affiche_pre($_app['stack_module']);
+affiche_pre(get_class_vars("Config"));
