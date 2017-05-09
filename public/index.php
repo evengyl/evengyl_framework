@@ -80,6 +80,5 @@ if(!empty($_POST))
 }
 
 
-
+affiche_pre($_SERVER);
 affiche_pre($_app['stack_module']);
-affiche_pre(get_class_vars("Config"));
