@@ -43,7 +43,7 @@ class _db_connect extends Config
 			parent::set_list_req_sql($req_sql);
 			$this->last_res_sql = mysqli_query($this->db_link, $req_sql)or die('Probleme de requete = '. $req_sql);// enregistre une copie temporaire de la reponse requete
 			
-			if(!$this->last_res_sql || $_SERVER['HTTP_HOST'] == "localhost")
+			if(!$this->last_res_sql && $_SERVER['HTTP_HOST'] == "localhost")
 			{
             	affiche_pre(mysqli_error($this->db_link));
         	}
