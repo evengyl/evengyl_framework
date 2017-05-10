@@ -34,10 +34,6 @@ class _db_connect extends Config
 	//elle recois la requete envoyer par l'appelant  
 	public function fetch_object($req_sql)  // elle recois la requ�te sql sous forme de string
 	{	
-
-		
-		
-
 		if($this->is_connected == false) // v�rifie si la connection � la DB est �tablie si pas , elle le fait
 			$this->connect(); //appel la fonction
 
@@ -46,6 +42,11 @@ class _db_connect extends Config
 			$this->last_req_sql = $req_sql; // enregistre une copie temporaire de la requete
 			parent::set_list_req_sql($req_sql);
 			$this->last_res_sql = mysqli_query($this->db_link, $req_sql)or die('Probleme de requete = '. $req_sql);// enregistre une copie temporaire de la reponse requete
+			
+			if(!$this->last_res_sql || $_SERVER['HTTP_HOST'] == "localhost")
+			{
+            	affiche_pre(mysqli_error($this->db_link));
+        	}
 		}// si les valeurs sont null ou diff�rente , enregistre les variable correctement
 		$res = mysqli_fetch_object($this->last_res_sql);  //enregistre les lignes de la requ�te sur un object
 		if (is_null($res))
