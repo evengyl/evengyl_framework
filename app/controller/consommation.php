@@ -75,7 +75,7 @@ Class consommation extends base_module
 		$this->total_consomation_gaz = $tmp_array[1];
 
 
-
+		$this->breadcrumb("Consommation");
 
 		$this->get_html_tpl = $this
 						->assign_var("res_fx_eau", $res_fx_eau)

@@ -11,7 +11,6 @@ start_exec_page_timer();
 
 Autoloader::register(); 
 $_app = array(); //contiendra tout les modules de l'applications appelé sur la page. apres execution de celui ci, il est placé dans l'app.
-
 //mise en route de la session
 
 
@@ -38,7 +37,7 @@ if(Config::$is_connect)
 	</head>
 	<body>
 		__MOD_header__
-		
+		__MOD2_breadcrumb__
 		<?  $route = new router($_GET['page']); ?>
 			
 		__TPL_footer__
@@ -80,3 +79,5 @@ if(!empty($_POST))
 }
 
 affiche_pre($_app['stack_module']);
+//affiche_pre($_app['module']);
+//affiche_pre($_app['navigation']);

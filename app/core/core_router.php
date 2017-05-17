@@ -19,11 +19,7 @@ Class core_router
 		echo "__TPL_".$this->route."__";
 	}
 
-	protected function assign_bread($title_brd)
-	{
-		echo '__MOD_breadcrumb("'.$title_brd.'")__';
-		return $this;
-	}
+
 
 	protected function assign_mod($specific_module = false)
 	{

@@ -46,7 +46,7 @@ Class login extends base_module
 		           	$req_sql->table = "login";
 		           	$req_sql->var = "login, password, level, last_connect";
 		           	$req_sql->where = "login = '".$pseudo."'";
-					$res_fx = $this->all_query->select($req_sql);
+					$res_fx = $this->sql->select($req_sql);
 
 		           	$res_fx = $res_fx[0];
 

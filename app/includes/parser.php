@@ -86,6 +86,7 @@ class parser
 
 	private function exec_mod($match_module, $page, $module_name,$var_in_module_name)
 	{
+		global $_app;
 		if($module_name != "")
 		{
 			$module = new $module_name($var_in_module_name);

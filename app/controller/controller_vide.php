@@ -10,8 +10,6 @@ Class name extends base_module
 
 		//use pour acceder a tout les query
 			$this->sql;
-			$this->all_query;
-			$this->mysql;
 
 		//pour assigner des var c'est ->assign_var('nameDansTpl', $var)
 		//pour assigner un tpl spécifique c'est ->use_template('TplName')

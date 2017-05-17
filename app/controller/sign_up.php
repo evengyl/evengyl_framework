@@ -48,7 +48,7 @@ Class sign_up extends base_module
 						$req_sql->var = "login";
 						$req_sql->where = "login = '".$pseudo."'";
 
-						$res_sql = $this->all_query->select($req_sql);
+						$res_sql = $this->sql->select($req_sql);
 
 
 		            	if(empty($res_sql))
@@ -65,7 +65,7 @@ Class sign_up extends base_module
 							$req_sql->ctx->avertissement = 0;
 							$req_sql->ctx->level = 0;
 							$req_sql->table = "login";
-							$this->all_query->insert_into($req_sql);
+							$this->sql->insert_into($req_sql);
 
 							//va insrer les données de bases pour le commencent du jeu
 							

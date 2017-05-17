@@ -13,19 +13,19 @@ Class router extends core_router
 			switch($this->route)
 			{
 				case 'home':
-					$this->assign_bread("")->assign_mod();
+					$this->assign_mod();
 					break;
 
 				case 'sign_up':	
-					$this->assign_bread("Page d'inscription")->assign_mod();
+					$this->assign_mod();
 					break;
 
 				case 'admin':
-					$this->is_connect()->assign_bread("Page d'administration diverse")->assign_mod();
+					$this->is_connect()->assign_mod();
 					break;
 			
 				case 'login':
-		 			$this->assign_bread("Page de connexion")->assign_mod();
+		 			$this->assign_mod();
 		 			break;
 
 				case 'logout':
@@ -33,31 +33,31 @@ Class router extends core_router
 		 			break;
 
 				case 'test':
-					$this->assign_bread("test")->assign_mod();
+					$this->assign_mod();
 					break;
 
 				case 'contact':
-					$this->assign_bread("Page de contact")->assign_mod();
+					$this->assign_mod();
 					break;
 
 				case 'my_account':
-					$this->is_connect()->assign_bread("Mon compte")->assign_mod();
+					$this->is_connect()->assign_mod();
 					break;
 
 				case 'avatar':
-					$this->assign_bread("Test avatar GD")->assign_mod();
+					$this->assign_mod();
 					break;
 
 				case 'password_change':
-					$this->assign_bread("Changement de mot de passe de votre compte")->assign_mod('my_account');
+					$this->assign_mod('my_account');
 					break;
 
 				case 'mail_box':
-					$this->assign_bread("Boite de réception")->assign_mod('my_account');
+					$this->assign_mod('my_account');
 					break;
 
 				case 'consommation':
-					$this->is_connect()->assign_bread("Page consommation")->assign_mod();
+					$this->is_connect()->assign_mod();
 					break;
 				
 				default:

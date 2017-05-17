@@ -5,42 +5,43 @@ Class breadcrumb extends base_module
 
 	public function __construct($var_in_match)
 	{	
+		global $_app;
 
-		parent::__construct(__CLASS__);
+		$breadcrumb = [];
 
-
-		if(!empty($var_in_match))
+		if(isset($_app['navigation']))
 		{
-			$breadcrumb = array("Accueil" => "?page=home", $var_in_match => "?page=".$_GET['page']);
-		
-		}
-		else if(isset($_GET['page']))
-		{
-			$breadcrumb = array("Accueil" => "?page=home", $_GET['page'] => "?page=".$_GET['page']);
+			foreach($_app['navigation'] as $key_navigation => $row_navigation)
+			{
+				$breadcrumb[$row_navigation] = "?page=".$_GET['page'];
+			}
 		}
 		else
 		{
-			$breadcrumb = array("Accueil" => "?page=home");
+			if(isset($_GET['page']))
+				$breadcrumb = array($_GET['page'] => "?page=".$_GET['page']);
 		}
-
 		
-		$title_page ="<h1 style='margin-top:0px; margin-bottom:-4px; display:inline-block;'><div class='home_button_bread'><a class='hidden-xs' href='?page=home'><span class='glyphicon glyphicon-home'></span></a></div>";
-
+		$breadcrumb = array_merge(array("Accueil" => "?page=home"), $breadcrumb);
+		
+		
 		$i = count($breadcrumb);
+
+		$title_page ="<div class='col-xs-12 breadcrumb_top'><h1><div class='home_button_bread'><a class='hidden-xs' href='?page=home'><span class='glyphicon glyphicon-home'></span></a></div>";
 		foreach($breadcrumb as $title => $link)
 		{
 			$i--;
-			$title_page .= "<div class='level_bread'><a style='color:#C0C0C0;' href='".$link."'>";
+			$title_page .= "<div class='level_bread'><a href='".$link."'>";
 
 			if($i==0) $title_page .= $title;
-				else $title_page .= $title.'&nbsp;&nbsp;>&nbsp;&nbsp;';
+				else $title_page .= $title.'</a><span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>';
 
-			$title_page .= "</a></div>";
+			$title_page .= "</div>";
 		}
-		$title_page .= "</h1>";
+		$title_page .= "</h1></div>";
 
 
-		$this->get_html_tpl = $this->assign_var("breadcrumb", $title_page)->render_tpl();
+		$this->get_html_tpl = $this->use_template("breadcrumb")->assign_var("breadcrumb", $title_page)->render_tpl();
 	}
 
 }

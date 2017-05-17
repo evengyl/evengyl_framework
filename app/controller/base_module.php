@@ -14,13 +14,10 @@ Class base_module
 	public $mysql;
 	public $all_query;
 
-
 	public function __construct($module_tpl_name = "")
 	{
 		$this->module_tpl_name = $module_tpl_name;
 		$this->sql = new all_query();
-		$this->mysql = new all_query();
-		$this->all_query = new all_query();
 		$this->user = singleton::getInstance()->user;
 	}
 
@@ -73,5 +70,11 @@ Class base_module
 		else
 			$this->template_path = "../vues/".$this->template_name.".php";
 
+	}
+
+	public function breadcrumb($title_brd)
+	{
+		global $_app;
+		$_app['navigation'][] = $title_brd;
 	}
 }
