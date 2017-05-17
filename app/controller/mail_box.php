@@ -3,9 +3,10 @@
 Class mail_box extends base_module
 {
 
-	public function __construct()
+	public function __construct(&$_app)
 	{		
-		parent::__construct(__CLASS__);
+		$_app->module_name = __CLASS__;
+		parent::__construct($_app);
 
 		$req_sql = new stdClass();
 		$req_sql->table = "login";

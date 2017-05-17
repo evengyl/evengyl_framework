@@ -14,9 +14,10 @@ Class consommation extends base_module
 	public $total_consomation_elec_nuit = 0;
 	public $total_consomation_gaz = 0;
 
-	public function __construct()
+	public function __construct(&$_app)
 	{		
-		parent::__construct(__CLASS__);
+		$_app->module_name = __CLASS__;
+		parent::__construct($_app);
 
 		if(isset($_POST['relever_eau']) && !empty($_POST['relever_eau']))
 			$this->push_relever_sql("eau", $_POST['relever_eau']);
@@ -75,7 +76,7 @@ Class consommation extends base_module
 		$this->total_consomation_gaz = $tmp_array[1];
 
 
-		$this->breadcrumb("Consommation");
+		$this->_app->navigation->set_breadcrumb("Consommation");
 
 		$this->get_html_tpl = $this
 						->assign_var("res_fx_eau", $res_fx_eau)

@@ -4,11 +4,14 @@ class parser
 	private $module_tpl_name;
 	private $rendu_module = "";
 	private $stack_mod_tpl = "";
+	public $_app;
 
-
+	public function __construct(&$_app)
+	{
+		$this->_app = &$_app;
+	}
 	public function parser_main($page)
 	{
-		global $_app;
 		if(!empty($page))
 		{
 			if(preg_match('/__TPL_[a-z_]+__/', $page, $match))
@@ -35,8 +38,7 @@ class parser
 
 	private function parse_template($match_template, $page)
 	{
-		global $_app;
-		$_app['stack_module'][] = $match_template;
+		$this->_app->stack_module[] = $match_template;
 
 		$tpl_name = preg_replace(array("/__TPL[0-9]*_/", "/__/"), "", $match_template);
 
@@ -50,9 +52,8 @@ class parser
 
 	private function parse_module($match_module, $page)
 	{
-		global $_app;
 		$var_in_module_name = '';
-		$_app['stack_module'][] = $match_module;
+		$this->_app->stack_module[] = $match_module;
 
 		$module_name = preg_replace(array('/__[MOD]*[0-9]*_/', '/[(\"]+[a-zA-Z0-9_éèçàê \']*[\")]+/',  '/__/'), '', $match_module);
 		if(preg_match('/[(\"]+([a-zA-Z0-9_éèçàê \']*)[\")]+/', $match_module, $match_var))
@@ -68,6 +69,7 @@ class parser
 		if(file_exists($path_template))
 		{
 			ob_start();
+				$this->_app->template[] = $path_template;
 				require_once($path_template);
 			$tpl_content = ob_get_clean();
 		}
@@ -86,11 +88,11 @@ class parser
 
 	private function exec_mod($match_module, $page, $module_name,$var_in_module_name)
 	{
-		global $_app;
 		if($module_name != "")
 		{
-			$module = new $module_name($var_in_module_name);
-			$_app['module'][] = $module;
+			$this->_app->var_module = $var_in_module_name;
+			$module = new $module_name($this->_app);
+			$this->_app->module[] = $module;
 			$rendu_module =  $module->get_html_tpl;
 		}
 		else

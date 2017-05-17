@@ -3,15 +3,14 @@
 Class breadcrumb extends base_module
 {
 
-	public function __construct($var_in_match)
+	public function __construct(&$_app)
 	{	
-		global $_app;
-
+		$this->_app = &$_app;
 		$breadcrumb = [];
 
-		if(isset($_app['navigation']))
+		if(isset($this->_app->navigation->_stack_nav))
 		{
-			foreach($_app['navigation'] as $key_navigation => $row_navigation)
+			foreach($this->_app->navigation->_stack_nav as $key_navigation => $row_navigation)
 			{
 				$breadcrumb[$row_navigation] = "?page=".$_GET['page'];
 			}

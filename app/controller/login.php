@@ -4,10 +4,11 @@ Class login extends base_module
 {
 
 
-	public function __construct()
+	public function __construct(&$_app)
 	{		
-		
-		parent::__construct();
+		$_app->module_name = __CLASS__;
+		parent::__construct($_app);
+
 		//va checker a chaque page si on est bien logger
 		if(isset($_POST['return_form_complet'])) 
 			Config::$is_connect = $this->check_session($_POST);

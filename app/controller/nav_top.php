@@ -3,9 +3,10 @@
 Class nav_top extends base_module
 {
 
-	public function __construct()
+	public function __construct(&$_app)
 	{		
-		parent::__construct(__CLASS__);
+		$_app->module_name = __CLASS__;
+		parent::__construct($_app);
 
 
 		$this->get_html_tpl =  $this->use_template('nav_top')->render_tpl();

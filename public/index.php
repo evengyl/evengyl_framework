@@ -10,7 +10,7 @@ start_exec_page_timer();
 //mise en route de l'autoload
 
 Autoloader::register(); 
-$_app = array(); //contiendra tout les modules de l'applications appelé sur la page. apres execution de celui ci, il est placé dans l'app.
+
 //mise en route de la session
 
 
@@ -22,7 +22,7 @@ ob_start();
 
 
 //va être appeler a chaque démarage de script page et va checker si le joueur est connecter ou pas.
-$login = new login();
+$login = new login($_app);
 
 
 if(Config::$is_connect)
@@ -48,7 +48,9 @@ if(Config::$is_connect)
 
 $page = ob_get_clean();
 //appel le parseur qui rendra tout les modules et tout les vues
-$parser = new parser();
+
+ //contiendra tout les modules de l'applications appelé sur la page. apres execution de celui ci, il est placé dans l'app.
+$parser = new parser($_app);
 $page = $parser->parser_main($page);
 //affiche la page complete avec toute les données traitée
 echo $page; 
@@ -78,6 +80,3 @@ if(!empty($_POST))
 	}
 }
 
-affiche_pre($_app['stack_module']);
-//affiche_pre($_app['module']);
-//affiche_pre($_app['navigation']);

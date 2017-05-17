@@ -9,16 +9,23 @@ Class base_module
 	public $template_name;
 	public $template_path;
 	public $user;
-	public $module_tpl_name;
+	public $module_name;
 	public $sql;
 	public $mysql;
 	public $all_query;
+	public $_app;
 
-	public function __construct($module_tpl_name = "")
+	public function __construct(&$_app)
 	{
-		$this->module_tpl_name = $module_tpl_name;
+		$this->_app = &$_app;
+		$this->module_name = $this->_app->module_name;
 		$this->sql = new all_query();
 		$this->user = singleton::getInstance()->user;
+	}
+
+	public function render_app()
+	{
+		affiche_pre($this->_app);
 	}
 
 	public function assign_var($var_name , $value)
@@ -63,18 +70,12 @@ Class base_module
 	public function set_template_path()
 	{
 		if(empty($this->template_name))
-			$this->template_name = $this->module_tpl_name;
+			$this->template_name = $this->module_name;
 
 		if(strpos($this->template_name, "admin_") !== false)
 			$this->template_path = "../vues/admin_tool/".$this->template_name.".php";
 		else
 			$this->template_path = "../vues/".$this->template_name.".php";
 
-	}
-
-	public function breadcrumb($title_brd)
-	{
-		global $_app;
-		$_app['navigation'][] = $title_brd;
 	}
 }
