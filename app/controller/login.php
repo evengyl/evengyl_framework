@@ -2,8 +2,6 @@
 
 Class login extends base_module
 {
-
-
 	public function __construct(&$_app)
 	{		
 		$_app->module_name = __CLASS__;
@@ -49,22 +47,30 @@ Class login extends base_module
 		           	$req_sql->where = "login = '".$pseudo."'";
 					$res_fx = $this->sql->select($req_sql);
 
-		           	$res_fx = $res_fx[0];
-
 		            if(empty($res_fx))
 		            {
-		                $_SESSION['error'] = 'Login incorrect !';
+		                $_SESSION['error'] = 'Login incorrect ou inexistant !';
 		                return 0;
 		            }
-		            else if (password_verify($password, $res_fx->password))
+		            else if(isset($res_fx[0]->login))
 		            {
-		            	unset($_SESSION['error']);
-		            	unset($post);
-		                $_SESSION['pseudo'] = $res_fx->login;
-		                $_SESSION['level'] = $res_fx->level;
-		                $_SESSION['last_connect'] = $res_fx->last_connect;
-		                $_SESSION['is_connect'] = 1;
-		                return 1;
+		            	$res_fx = $res_fx[0];
+		            	if(password_verify($password, $res_fx->password))
+		            	{
+			            	unset($_SESSION['error']);
+			            	unset($post);
+			                $_SESSION['pseudo'] = $res_fx->login;
+			                $_SESSION['level'] = $res_fx->level;
+			                $_SESSION['last_connect'] = $res_fx->last_connect;
+			                $_SESSION['is_connect'] = 1;
+			                return 1;
+		            	}
+		            	else
+		            	{
+		            		$_SESSION['error'] = 'Mot de passe incorrect !';
+		            		return 0;
+		            	}
+
 		            }
 		            else
 		            {
@@ -98,7 +104,7 @@ Class login extends base_module
 		           	$req_sql->where = "login = '".$pseudo."'";
 					$res_fx = $this->sql->select($req_sql);
 
-		           	$res_fx = $res_fx[0];
+		           	
 
 		            if(empty($res_fx))
 		            {
@@ -107,10 +113,11 @@ Class login extends base_module
 		            }
 		            else
 		            {
+		            	$res_fx = $res_fx[0];
 		            	unset($_SESSION['error']);
 		            	unset($post);
 		            	$subject = "Voici votre mot de passe : ".$res_fx->password_no_hash;
-						mail($res_fx->email, "Message du site Diy N Game.", $subject);
+						mail($res_fx->email, "Recupération de mot de passe.", $subject);
 		                return 0;
 		            }
 		    	}
@@ -123,13 +130,8 @@ Class login extends base_module
 		}
 		else
 		{
-			$_SESSION['error'] = "Attention, Le clients à tenter un priratage";
+			$_SESSION['error'] = "Attention, Le clients à tenter quelque chose avec le formulaire";
 			return 0;
 		}
 	}
-
-
-	
-
-	
 }
