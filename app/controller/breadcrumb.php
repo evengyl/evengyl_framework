@@ -32,8 +32,8 @@ Class breadcrumb extends base_module
 			$i--;
 			$title_page .= "<div class='level_bread'><a href='".$link."'>";
 
-			if($i==0) $title_page .= $title;
-				else $title_page .= $title.'</a><span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>';
+			if($i==0) $title_page .= $title.'</a>';
+			else $title_page .= $title.'</a><span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>';
 
 			$title_page .= "</div>";
 		}
