@@ -139,8 +139,9 @@ $one_percent_graph = 0.05; //kwh?>
 	<div class="form-group col-xs-7 col-sm-2">
 		<input type="text" class="form-control" name="relever_eau" placeholder="Relever Eau">
 	</div>
-
-	<button type="submit" class="btn btn-default col-xs-5 col-sm-2">Valider</button>
+	<div class="form-group col-xs-7 col-sm-2">
+		<button type="submit" class="btn btn-default col-xs-5 col-sm-2">Valider</button>
+		</div>	
 </form>
 <div class="col-xs-12"> </div>
 
