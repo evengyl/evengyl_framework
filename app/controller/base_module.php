@@ -11,16 +11,18 @@ Class base_module
 	public $user;
 	public $module_name;
 	public $sql;
-	public $mysql;
-	public $all_query;
 	public $_app;
 
 	public function __construct(&$_app)
 	{
 		$this->_app = &$_app;
+		if(!isset($_app->user) || !empty($_app->user))
+			$this->user = singleton::get_singleton()->user;
+		else
+			$this->user = $this->_app->user;
+
 		$this->module_name = $this->_app->module_name;
 		$this->sql = new all_query();
-		$this->user = singleton::getInstance()->user;
 	}
 
 	public function render_app()

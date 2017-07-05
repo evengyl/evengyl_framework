@@ -10,6 +10,7 @@ Class router extends core_router
 
 		if(isset($this->route))
 		{
+			//assign_mod($module_different_du_get = false, $modul_secondaire = false, $var_mod = false, $tpl_uniquement =false)
 			switch($this->route)
 			{
 				case 'home':
@@ -25,7 +26,7 @@ Class router extends core_router
 					break;
 			
 				case 'login':
-		 			$this->assign_mod();
+		 			$this->assign_mod('security', false, false, false);
 		 			break;
 
 				case 'logout':
@@ -61,11 +62,9 @@ Class router extends core_router
 					break;
 				
 				default:
+					$_SESSION['error'] = "Cette route n'existe pas, veuiller vérifier le nom donner dans vos controlleurs : ".$this->route;
 					unset($this->route);
-					$_SESSION['error'] = "Le call _GET au routeur n'existe pas:  controller = Router on passe au construct";
 			}	
 		}
 	}
-
-
 }

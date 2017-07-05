@@ -7,19 +7,19 @@ class singleton
 
    private function __construct()
    {
-      $this->user = new min_require();
+      $this->user = new user();
    }
  
 
-   public static function getInstance()
-   {
-     if(is_null(self::$_instance))
-     {
-        self::$_instance = new singleton();  
-     }
- 
-     return self::$_instance;
-   }
+  public static function get_singleton()
+  {
+    if(is_null(self::$_instance))
+    {
+      self::$_instance = new singleton();  
+    }
+
+    return self::$_instance;
+  }
 
 }
 

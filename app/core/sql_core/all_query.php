@@ -12,74 +12,28 @@ class all_query extends _db_connect
 
 	public function select($req_sql)
 	{
-		$construct_req = "";
-
-
 		if(strpos($req_sql->table, Config::$prefix_sql) === false)
 			$req_sql->table = Config::$prefix_sql.$req_sql->table;
 
+		$select =  new select($req_sql);
+		$construct_req = $select->get_string();
 
-		if(is_object($req_sql))
+		$i = 0;
+
+		while($row = parent::fetch_object($construct_req))
 		{
-			$construct_req .= "SELECT ";
-
-			if(isset($req_sql->var) && $req_sql->var != "")
-			{
-				if(isset($req_sql->distinct) && $req_sql->distinct != false)
-					$construct_req .="DISTINCT ";
-
-				$construct_req .= $req_sql->var." ";
-			}
-			else
-			{
-				if(isset($req_sql->distinct) && $req_sql->distinct != false)
-					$construct_req .="DISTINCT ";
-
-				$construct_req .= "* ";
-			}
-				
-
-			
-
-
-			if(isset($req_sql->table) && $req_sql->table != "")
-				$construct_req .= "FROM ".$req_sql->table." ";
-			else
-				return 0;
-
-
-			if(isset($req_sql->where) && $req_sql->where != "")
-				$construct_req .= "WHERE ".$req_sql->where." ";	
-			else
-				$construct_req .= "WHERE 1 ";	
-
-
-			if(isset($req_sql->order) && $req_sql->order != "")
-				$construct_req .= "ORDER BY ".$req_sql->order." ";	
-			else
-				$construct_req .= "ORDER BY id ASC";	
-
-
-			if(isset($req_sql->limit) && $req_sql->limit != "")
-				$construct_req .= " LIMIT ".$req_sql->limit." ";	
-			else
-				$construct_req .= "";	
-
-
-			$i = 0;
-
-			while($row = parent::fetch_object($construct_req))
-			{
-				$res_fx[$i] = $row;
-				$i++;
-			}
-
-			unset($construct_req); //vide le buffer de memoire $req_sql pour liberer de la place 
-			if(!isset($res_fx))
-				return '';
-			else 
-				return $res_fx;		
+			$res_fx[$i] = $row;
+			$i++;
 		}
+
+		unset($construct_req); //vide le buffer de memoire $req_sql pour liberer de la place 
+		if(!isset($res_fx))
+			return '';
+		else 
+			return $res_fx;		
+
+
+		
 	}
 
 

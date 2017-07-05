@@ -17,6 +17,8 @@ class Autoloader
 
         else if($class == "all_query") require "sql_core/".$class.".php";
 
+        else if($class == "select") require "sql_core/core_".$class.".php";
+
         else if($class == "parser") require __DIR__."../../includes/".$class.".php";
 
         else if(strpos($class, "admin_") !== false) require __DIR__."../../controller/admin_tool/".$class.".php";

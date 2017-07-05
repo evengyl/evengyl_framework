@@ -3,9 +3,10 @@
 Class admin_edit_config_app extends base_module
 {
 
-	public function __construct()
+	public function __construct(&$_app)
 	{		
-		parent::__construct(__CLASS__);
+		$_app->module_name = __CLASS__;
+		parent::__construct($_app);
 
 		//on recup le contenu sous forme d'objet du jason config
 		$_get_config = $this->get_config_base();
@@ -28,8 +29,7 @@ Class admin_edit_config_app extends base_module
 			$_get_config = $this->get_config_base();
 		}
 		
-
-		$this->get_html_tpl = $this->assign_var('_config', $_get_config)->render_tpl();
+		$this->get_html_tpl = $this->assign_var('_config', $_get_config)->use_template()->render_tpl();
 	}
 
 

@@ -7,6 +7,11 @@ Class user extends all_query
 		if(Config::$is_connect == 1)
 		{
 			parent::__construct();
+            $this->get_variable_user();
+		}
+		else
+		{
+			return 0;
 		}
 	}
 

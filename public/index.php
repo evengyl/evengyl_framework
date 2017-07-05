@@ -5,11 +5,6 @@
 
 //require de base avec les fonciton diverse et le loader, la fonction microtime est la uniquement pour le temps d'execution des requete pour optimiser
 require "../app/includes/app_min_load.php";
-start_exec_page_timer();
-
-//mise en route de l'autoload
-
-Autoloader::register(); 
 
 //mise en route de la session
 
@@ -20,15 +15,13 @@ if(!isset($_GET['page']))
 ob_start();
 
 
+//va être appeler a chaque démarage de script page et va checker si le user est connecter ou pas.
+new security($_app);
 
-//va être appeler a chaque démarage de script page et va checker si le joueur est connecter ou pas.
-$login = new login($_app);
 
 
-if(Config::$is_connect)
-{
-	$user = singleton::getInstance();
-}?>
+
+?>
 
 
 <html lang="Fr-be">
@@ -39,7 +32,6 @@ if(Config::$is_connect)
 		__MOD_header__
 		__MOD2_breadcrumb__
 		<?  $route = new router($_GET['page']); ?>
-			
 		__TPL_footer__
 	</body>
 	__TPL2_bottom_head__
