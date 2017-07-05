@@ -101,7 +101,7 @@ Class consommation extends base_module
 	private function get_prix_m_eau()
 	{
 		// moyen de m3 tout compris pour max 40 m³
-		$moyenne_m3 = 5.4415;
+		$moyenne_m3 = 1.5;
 		$this->prix_m_eau = $moyenne_m3;
 	}
 
