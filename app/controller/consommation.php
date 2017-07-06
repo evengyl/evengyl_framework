@@ -97,6 +97,11 @@ Class consommation extends base_module
 						->assign_var("prix_kwh_elec_nuit", $this->prix_kwh_elec_nuit + $this->prix_location_compteur_elec)
 						->assign_var("prix_kwh_gaz", $this->prix_kwh_gaz + $this->prix_location_compteur_gaz)
 
+						->assign_var("prix_compteur_eau", $this->prix_m_eau + $this->prix_location_compteur_eau)
+						->assign_var("prix_compteur_elec_jour", $this->prix_kwh_elec_jour + $this->prix_location_compteur_elec)
+						->assign_var("prix_compteur_elec_nuit", $this->prix_kwh_elec_nuit + $this->prix_location_compteur_elec)
+						->assign_var("prix_compteur_gaz", $this->prix_kwh_gaz + $this->prix_location_compteur_gaz)
+
 						->assign_var("total_consomation_eau", $this->total_consomation_eau)
 						->assign_var("total_consomation_elec_jour", $this->total_consomation_elec_jour)
 						->assign_var("total_consomation_elec_nuit", $this->total_consomation_elec_nuit)
