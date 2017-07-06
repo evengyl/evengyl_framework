@@ -13,6 +13,8 @@ Class consommation extends base_module
 	public $prix_location_compteur_gaz = 40/12;
 	public $prix_location_compteur_elec = 60/12;
 
+	public $prix_compteur = 0;
+
 	public $total_consomation_eau = 0;
 	public $total_consomation_elec_jour = 0;
 	public $total_consomation_elec_nuit = 0;
@@ -79,6 +81,8 @@ Class consommation extends base_module
 		$res_fx_gaz = $tmp_array[0];
 		$this->total_consomation_gaz = $tmp_array[1];
 
+		$this->prix_compteur = $this->prix_location_compteur_eau + $this->prix_location_compteur_gaz + $this->prix_location_compteur_elec;
+
 
 		$this->_app->navigation->set_breadcrumb("Consommation");
 
@@ -88,10 +92,10 @@ Class consommation extends base_module
 						->assign_var("res_fx_electricite_nuit", $res_fx_electricite_nuit)
 						->assign_var("res_fx_gaz", $res_fx_gaz)
 
-						->assign_var("prix_m_eau", $this->prix_m_eau)
-						->assign_var("prix_kwh_elec_jour", $this->prix_kwh_elec_jour)
-						->assign_var("prix_kwh_elec_nuit", $this->prix_kwh_elec_nuit)
-						->assign_var("prix_kwh_gaz", $this->prix_kwh_gaz)
+						->assign_var("prix_m_eau", $this->prix_m_eau + $this->prix_compteur)
+						->assign_var("prix_kwh_elec_jour", $this->prix_kwh_elec_jour + $this->prix_compteur)
+						->assign_var("prix_kwh_elec_nuit", $this->prix_kwh_elec_nuit + $this->prix_compteur)
+						->assign_var("prix_kwh_gaz", $this->prix_kwh_gaz + $this->prix_compteur)
 
 						->assign_var("total_consomation_eau", $this->total_consomation_eau)
 						->assign_var("total_consomation_elec_jour", $this->total_consomation_elec_jour)
@@ -169,7 +173,7 @@ Class consommation extends base_module
 				if($value >= $tmp)
 				{
 					$tmp_array[$key_annee][$array_month[$key_moi]]['relever'] = $value - $tmp;
-					$tmp_array[$key_annee][$array_month[$key_moi]]['prix_moyen'] = round((($value - $tmp) * $prix_moyen) + ($this->prix_location_compteur_eau + $this->prix_location_compteur_gaz + $this->prix_location_compteur_elec), 3).' €';
+					$tmp_array[$key_annee][$array_month[$key_moi]]['prix_moyen'] = round((($value - $tmp) * $prix_moyen) + ($this->prix_compteur), 3).' €';
 					$tmp = $value;
 				}
 			}
