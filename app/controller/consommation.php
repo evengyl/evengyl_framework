@@ -7,7 +7,11 @@ Class consommation extends base_module
 	public $prix_kwh_elec_jour = 0;
 	public $prix_kwh_gaz = 0;
 
-	public $prix_location_compteur = 40/12;
+
+
+	public $prix_location_compteur_eau = 120/12;
+	public $prix_location_compteur_gaz = 40/12;
+	public $prix_location_compteur_elec = 60/12;
 
 	public $total_consomation_eau = 0;
 	public $total_consomation_elec_jour = 0;
@@ -165,7 +169,7 @@ Class consommation extends base_module
 				if($value >= $tmp)
 				{
 					$tmp_array[$key_annee][$array_month[$key_moi]]['relever'] = $value - $tmp;
-					$tmp_array[$key_annee][$array_month[$key_moi]]['prix_moyen'] = round((($value - $tmp) * $prix_moyen) + $this->prix_location_compteur, 3).' €';
+					$tmp_array[$key_annee][$array_month[$key_moi]]['prix_moyen'] = round((($value - $tmp) * $prix_moyen) + ($this->prix_location_compteur_eau + $this->prix_location_compteur_gaz + $this->prix_location_compteur_elec), 3).' €';
 					$tmp = $value;
 				}
 			}
