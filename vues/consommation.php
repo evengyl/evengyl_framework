@@ -16,7 +16,7 @@ $one_percent_graph = 1; //kwh?>
 							<div class="col-xs-12 col-without-padding" style=" position:absolute; bottom:-99px; ">
 								<div class="col-xs-12 barrette" style="height:<?= $mois['relever']/$one_percent_graph ?>px;">
 								<?= $mois['relever'] ?> kw/h<br>
-								<?= $mois['prix_moyen'] + $prix_compteur_elec_jour ?>+/-<br>
+								<?= round($mois['prix_moyen'] + $prix_compteur_elec_jour,3) ?>+/-<br>
 								<?= $moi_name ?>
 								</div>
 							</div>
@@ -46,7 +46,7 @@ $one_percent_graph = 1; //kwh?>
 							<div class="col-xs-12 col-without-padding" style=" position:absolute; bottom:-99px; ">
 								<div class="col-xs-12 barrette" style="height:<?= $mois['relever']/$one_percent_graph ?>px;">
 								<?= $mois['relever'] ?> kw/h<br>
-								<?= $mois['prix_moyen'] + $prix_compteur_elec_nuit?>+/-<br>
+								<?= round($mois['prix_moyen'] + $prix_compteur_elec_nuit,3)?>+/-<br>
 								<?= $moi_name ?>
 								</div>
 							</div>
@@ -78,7 +78,7 @@ $one_percent_graph = 0.2; //kwh?>
 							<div class="col-xs-12 col-without-padding" style=" position:absolute; bottom:-99px; ">
 								<div class="col-xs-12 barrette" style="height:<?= $mois['relever']/$one_percent_graph ?>px;">
 								<?= $mois['relever'] ?> m³<br>
-								<?= $mois['prix_moyen'] + $prix_compteur_gaz ?>+/-<br>
+								<?= round($mois['prix_moyen'] + $prix_compteur_gaz,3) ?>+/-<br>
 								<?= $moi_name ?>
 								</div>
 							</div>
@@ -108,7 +108,7 @@ $one_percent_graph = 0.05; //kwh?>
 							<div class="col-xs-12 col-without-padding" style=" position:absolute; bottom:-99px; ">
 								<div class="col-xs-12 barrette" style="height:<?= $mois['relever']/$one_percent_graph ?>px;">
 								<?= $mois['relever'] ?> m³<br>
-								<?= $mois['prix_moyen'] + $prix_compteur_eau ?>+/-<br>
+								<?= round($mois['prix_moyen'] + $prix_compteur_eau,3) ?>+/-<br>
 								<?= $moi_name ?>
 								</div>
 							</div>
