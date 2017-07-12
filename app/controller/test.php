@@ -9,6 +9,8 @@ Class test extends base_module
 
 		$this->_app->navigation->set_breadcrumb("Zone de test");
 
+
+$this->get_html_tpl = $this->render_tpl();
 /*
 
 
@@ -368,7 +370,7 @@ Class test extends base_module
 
 
 
-		$req_sql_general = array('table' => 'appart_ft_product', "datas" => array("id","image","name","code"), 'where' => "appart_ft_product.id", 'where_array' => [1,2,3,4,5,6]);
+		//$req_sql_general = array('table' => 'appart_ft_product', "datas" => array("id","image","name","code"), 'where' => "appart_ft_product.id", 'where_array' => [1,2,3,4,5,6]);
 
 	}
 }
