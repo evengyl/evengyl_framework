@@ -13,6 +13,11 @@
 				{
 					?>__MOD_admin_edit_config_app__<?
 				}
+
+				else if($_GET['action'] == "eval")
+				{
+					?>__MOD_admin_eval__<?
+				}
 					
 			}
 			else
@@ -20,6 +25,7 @@
 				<div class="col-xs-6 col-xs-offset-3">
 					<a href="?page=admin&action=pull_git" type="button" class="btn btn-primary btn-lg btn-block">Git Pull To gitHub Origin master</a>
 					<a href="?page=admin&action=edit_config_app" type="button" class="btn btn-primary btn-lg btn-block">Edit Option Config</a>
+					<a href="?page=admin&action=eval" type="button" class="btn btn-primary btn-lg btn-block">EVAL</a>
 				</div><?
 			}
 		}?>
