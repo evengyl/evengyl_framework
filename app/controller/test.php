@@ -10,7 +10,7 @@ Class test extends base_module
 		$this->_app->navigation->set_breadcrumb("Zone de test");
 
 
-$this->get_html_tpl = $this->render_tpl();
+		$this->get_html_tpl = $this->render_tpl();
 /*
 
 
