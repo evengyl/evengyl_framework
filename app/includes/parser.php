@@ -5,9 +5,11 @@ class parser
 	private $rendu_module = "";
 	private $stack_mod_tpl = "";
 	public $_app;
+	public $_view_tpl_in_source_code;
 
 	public function __construct(&$_app)
 	{
+		$this->_view_tpl_in_source_code = (Config::$view_tpl_in_source_code == 1)? 1 : 0;
 		$this->_app = &$_app;
 	}
 	public function parser_main($page)
@@ -32,7 +34,9 @@ class parser
 		else
 			$_SESSION['error'] = "Il y a un problème dans le parser Parser_main() la page n'est pas arrivée au parseur";
 
-		return $page;
+
+			return $page;
+
 	}
 
 
@@ -47,7 +51,7 @@ class parser
 		else
 			$path_template = '../vues/'.$tpl_name.'.php';
 		
-		return $this->exec_tpl($match_template, $page, $path_template);
+		return $this->exec_tpl($match_template, $page, $path_template, $tpl_name);
 	}
 
 	private function parse_module($match_module, $page)
@@ -63,7 +67,7 @@ class parser
 	}
 
 
-	private function exec_tpl($match_template, $page, $path_template)
+	private function exec_tpl($match_template, $page, $path_template, $tpl_name)
 	{
 		$tpl_content ="";
 		if(file_exists($path_template))
@@ -72,10 +76,13 @@ class parser
 				$this->_app->template[] = $path_template;
 				require_once($path_template);
 			$tpl_content = ob_get_clean();
+
+			if($this->_view_tpl_in_source_code == 1)
+				$tpl_content = "<!-- Début Template : ".$tpl_name."-->".$tpl_content."<!-- Fin Template : ".$tpl_name."-->";
 		}
 		else
 		{
-			$_SESSION['error'] = "Le Template : '".$path_template. "' à été demander mais n'existe pas, le fichier n'est pas créé";
+			$_SESSION['error'] = "Le Template : '".$tpl_name. "' à été demander mais n'existe pas, le fichier n'est pas créé";
 			return '';
 		}
 
@@ -94,6 +101,9 @@ class parser
 			$module = new $module_name($this->_app);
 			$this->_app->module[] = $module;
 			$rendu_module =  $module->get_html_tpl;
+
+			if($this->_view_tpl_in_source_code == 1)
+				$rendu_module = "<!-- Début module : ".$module_name."-->".$rendu_module."<!-- Fin module : ".$module_name."-->";
 		}
 		else
 		{

@@ -37,7 +37,6 @@ new security($_app);
 	__TPL2_bottom_head__
 </html><?
 
-
 $page = ob_get_clean();
 //appel le parseur qui rendra tout les modules et tout les vues
 
