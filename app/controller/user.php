@@ -1,7 +1,7 @@
 <?
 Class user extends all_query
 {
-
+	
 	public function __construct()
 	{
 		if(Config::$is_connect == 1)
@@ -10,15 +10,14 @@ Class user extends all_query
             $this->get_variable_user();
 		}
 		else
-		{
 			return 0;
-		}
 	}
 
 	public function get_variable_user()
 	{
 		if(!isset($this->user_infos))
-			$this->user_infos = new stdClass();	
+			$this->user_infos = new stdClass();
+
 		$req_sql = new stdClass;
 		$req_sql->table = "login";
 		$req_sql->var = "*";

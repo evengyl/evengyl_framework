@@ -5,7 +5,7 @@
 		{?>
 			<div class="form-group">
 			    <label for="<?= $key_config; ?>" style="color:white;"><?= strtoupper($key_config); ?></label>
-			    <input type="text" class="form-control" id="<?= $key_config; ?>" name="<?= $key_config; ?>" placeholder="<?= $row_config; ?>">
+			    <input type="text" class="form-control" id="<?= $key_config; ?>" value="<?= $row_config; ?>" name="<?= $key_config; ?>" placeholder="<?= $row_config; ?>">
 		    </div>
 		    <?
 		}?>

@@ -24,6 +24,7 @@ Class consommation extends base_module
 	{		
 		$_app->module_name = __CLASS__;
 		parent::__construct($_app);
+		$this->_app->navigation->set_breadcrumb("Consommation");
 
 		if(isset($_POST['relever_eau']) && !empty($_POST['relever_eau']))
 			$this->push_relever_sql("eau", $_POST['relever_eau']);
@@ -84,7 +85,7 @@ Class consommation extends base_module
 		$this->prix_compteur = $this->prix_location_compteur_eau + $this->prix_location_compteur_gaz + $this->prix_location_compteur_elec;
 
 
-		$this->_app->navigation->set_breadcrumb("Consommation");
+		
 
 		$this->get_html_tpl = $this
 						->assign_var("res_fx_eau", $res_fx_eau)

@@ -1,15 +1,15 @@
 <?
 class singleton
 {
- 
-   private static $_instance = null;
-   public $user;
 
-   private function __construct()
-   {
-      $this->user = new user();
-   }
- 
+  private static $_instance = null;
+  public $user;
+
+  private function __construct()
+  {
+    $this->user = new user();
+  }
+
 
   public static function get_singleton()
   {

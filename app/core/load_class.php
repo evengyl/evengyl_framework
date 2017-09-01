@@ -17,7 +17,7 @@ class Autoloader
 
         else if($class == "all_query") require "sql_core/".$class.".php";
 
-        else if($class == "select") require "sql_core/core_".$class.".php";
+        else if($class == "select") require "sql_core/".$class.".php";
 
         else if($class == "parser") require __DIR__."../../includes/".$class.".php";
 

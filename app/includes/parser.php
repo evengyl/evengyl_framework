@@ -42,8 +42,6 @@ class parser
 
 	private function parse_template($match_template, $page)
 	{
-		$this->_app->stack_module[] = $match_template;
-
 		$tpl_name = preg_replace(array("/__TPL[0-9]*_/", "/__/"), "", $match_template);
 
 		if(strpos($tpl_name, "admin_") !== false)
@@ -99,7 +97,7 @@ class parser
 		{
 			$this->_app->var_module = $var_in_module_name;
 			$module = new $module_name($this->_app);
-			$this->_app->module[] = $module;
+			//$this->_app->module[] = $module;
 			$rendu_module =  $module->get_html_tpl;
 
 			if($this->_view_tpl_in_source_code == 1)

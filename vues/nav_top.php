@@ -10,7 +10,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="?page=home">Evengyl</a>
+		      <a class="navbar-brand" href="?page=home"><?= Config::$name_head_nav ?></a>
 		    </div>
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class=" navbar-collapse collapse" id="nav_primal">

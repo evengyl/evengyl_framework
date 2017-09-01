@@ -18,9 +18,6 @@ ob_start();
 //va être appeler a chaque démarage de script page et va checker si le user est connecter ou pas.
 new security($_app);
 
-
-
-
 ?>
 
 
@@ -31,7 +28,7 @@ new security($_app);
 	<body>
 		__MOD_header__
 		__MOD2_breadcrumb__
-		<?  $route = new router($_GET['page']); ?>
+		<?  new router($_GET['page'], $_app); ?>
 		__TPL_footer__
 	</body>
 	__TPL2_bottom_head__
@@ -54,6 +51,7 @@ if(Config::$view_time_executed_in_footer_page)
 	view_time_exec_page();
 
 
+affiche_pre($_app);
 //affiche les messages d'erreur du code
 if(!empty($_SESSION['error']))
 {

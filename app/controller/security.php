@@ -2,10 +2,12 @@
 
 Class security extends base_module
 {
+	public $sql = "";
 	public function __construct(&$_app)
 	{		
+		$this->sql = new all_query();
 		$_app->module_name = __CLASS__;
-		parent::__construct($_app);
+		parent::__construct($_app, $sql);
 
 		//va checker a chaque page si on est bien logger
 		if(isset($_POST['return_form_complet']) || isset($_POST['return_form_complet_lost_login'])) 
@@ -33,8 +35,8 @@ Class security extends base_module
 		{
 		    if(isset($post["pseudo"]) && isset($post["password"]))
 		    {
-		    	$pseudo = $this->user->check_post_login($post['pseudo']);
-		    	$password = $this->user->check_post_login($post['password']);
+		    	$pseudo = $this->check_post_login($post['pseudo']);
+		    	$password = $this->check_post_login($post['password']);
 
 		    	if(!$pseudo || !$password)
 		    	{
@@ -135,5 +137,17 @@ Class security extends base_module
 			$_SESSION['error'] = "Attention, Le clients à tenter quelque chose avec le formulaire";
 			return 0;
 		}
+	}
+
+	public function check_post_login($text)
+	{
+		$text = trim($text);
+		$text = htmlentities($text);
+		$nb_char = strlen($text);
+
+		if($nb_char <= 6)
+			return 0;		
+		else
+			return $text;
 	}
 }

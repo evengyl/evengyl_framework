@@ -9,11 +9,19 @@
 class all_query extends _db_connect
 {
 	public $db_link;
+	private $table;
 
+	public function __construct()
+	{
+		if(Config::$prefix_sql != '')
+		{
+			$this->table = Config::$prefix_sql;
+		}
+	}
 	public function select($req_sql)
 	{
-		if(strpos($req_sql->table, Config::$prefix_sql) === false)
-			$req_sql->table = Config::$prefix_sql.$req_sql->table;
+		$req_sql->table = $this->table.$req_sql->table;	
+		
 
 		$select =  new select($req_sql);
 		$construct_req = $select->get_string();
@@ -31,23 +39,19 @@ class all_query extends _db_connect
 			return '';
 		else 
 			return $res_fx;		
-
-
-		
 	}
 
 
-	public function insert_into($res_sql) // opérationnel et fonctionnel , reste à tester sur la validation
+	public function insert_into($req_sql) // opérationnel et fonctionnel , reste à tester sur la validation
 	{
 		$this->set_db_link();
 
-		if(strpos($res_sql->table, Config::$prefix_sql) === false)
-			$res_sql->table = Config::$prefix_sql.$res_sql->table;
+		$req_sql->table = $this->table.$req_sql->table;	
 
 		$toute_les_colonnes = "";
 		$toute_les_valeurs = "";
 
-		foreach($res_sql->ctx as $nom_colonne => $valeur)
+		foreach($req_sql->ctx as $nom_colonne => $valeur)
 		{			
 			$valeur = mysqli_real_escape_string($this->db_link, $valeur);
 
@@ -61,7 +65,7 @@ class all_query extends _db_connect
 		$toute_les_colonnes = substr($toute_les_colonnes,2);
 
 		$toute_les_valeurs = substr($toute_les_valeurs,2);
-		$req_sql = "INSERT INTO ".$res_sql->table." (".$toute_les_colonnes.") VALUES (".$toute_les_valeurs.")";
+		$req_sql = "INSERT INTO ".$req_sql->table." (".$toute_les_colonnes.") VALUES (".$toute_les_valeurs.")";
 
 		parent::query($req_sql);
 		unset($req_sql);
@@ -69,16 +73,16 @@ class all_query extends _db_connect
 	}
 
 
-	public function update($object)
+	public function update($req_sql)
 	{
 		$set_all = "";
 
 		$this->set_db_link();
 
-		if(strpos($object->table, Config::$prefix_sql) === false)
-			$object->table = Config::$prefix_sql.$object->table;
+		$req_sql->table = $this->table.$req_sql->table;	
+		
 
-		foreach($object->ctx as $key => $values)
+		foreach($req_sql->ctx as $key => $values)
 		{
 			$values = mysqli_real_escape_string($this->db_link, $values);
 
@@ -90,12 +94,12 @@ class all_query extends _db_connect
 	
 		$set_all = substr($set_all,2);
 
-		if(isset($object->where))
+		if(isset($req_sql->where))
 		{				
-			if($object->where == "" OR $object->where == " ")
-				$req_sql = 'UPDATE '.$object->table.' SET '.$set_all;
+			if($req_sql->where == "" OR $req_sql->where == " ")
+				$req_sql = 'UPDATE '.$req_sql->table.' SET '.$set_all;
 			else
-				$req_sql = 'UPDATE '.$object->table.' SET '.$set_all.' WHERE '.$object->where;	
+				$req_sql = 'UPDATE '.$req_sql->table.' SET '.$set_all.' WHERE '.$req_sql->where;	
 		}
 
 		$requete_win_lost = parent::query_update($req_sql);
@@ -106,15 +110,15 @@ class all_query extends _db_connect
 			return false;
 		}
 		unset($req_sql);
-        return $erreur = 'modification bien appliquée';
+        return $erreur = true;
 
 	}
 
 
 	public function delete_row($table, $where)
 	{
-		if(strpos($table, Config::$prefix_sql) === false)
-			$table = Config::$prefix_sql.$table;
+		$req_sql->table = $this->table.$req_sql->table;	
+		
 
 		$req_sql = "DELETE FROM ".$table." WHERE ".$where;
 		parent::query($req_sql);
@@ -124,8 +128,8 @@ class all_query extends _db_connect
 	{
 		$construct_req = "";
 
-		if(strpos($obj->table, Config::$prefix_sql) === false)
-			$obj->table = Config::$prefix_sql.$obj->table;
+		$req_sql->table = $this->table.$req_sql->table;	
+		
 
 		if(is_object($obj))
 		{
@@ -189,53 +193,64 @@ class all_query extends _db_connect
 
 	public function generate_form_unpdate($table_needed, $id)
 	{
-		if(strpos($table_needed, Config::$prefix_sql) === false)
-			$table_needed = Config::$prefix_sql.$table_needed;
+		if(Config::$prefix_sql != '')
+		{
+			if(strpos($table_needed, Config::$prefix_sql) === false)
+				$table_needed = Config::$prefix_sql.$table_needed;
+		}
+			
 
 		$req_simply = new stdClass();
 		$req_simply->table = $table_needed;
 		$req_simply->var = "*";
 		$req_simply->where = "id = '". $id ."'";
-		$req_simply = $this->select($req_simply);?>
+		$req_simply = $this->select($req_simply);
 		
-	    <div class='contenu_compte'>
-	        <div class="row">
-	            <div class="col-lg-12">
-	                <form class="form-inline" style="margin:auto;" role="form" action="" method="POST">
-	                    <br><?php
-	                    foreach($req_simply[0] as $key => $value)
-	                    {?>
-	                            <div class="form-group <?
-		                            if($key == 'id')
-		                                echo  'has-error';
-		                            else
-	    	                            echo 'has-success';
-        	                    	?>" style="margin-right:30px;">
+		ob_start();?>
+		    <div class='contenu_compte'>
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <form class="form-inline" style="margin:auto;" role="form" action="" method="POST">
+		                    <br><?php
+		                    foreach($req_simply[0] as $key => $value)
+		                    {?>
+		                            <div class="form-group <?
+			                            if($key == 'id')
+			                                echo  'has-error';
+			                            else
+		    	                            echo 'has-success';
+	        	                    	?>" style="margin-right:30px;">
 
-	                                <div class="input-group">
-	                                    <div style="width: 200px;" class="input-group-addon"><?php echo $key ?></div>
-	                                    <input style='width:450px;' type="text" <?php echo ($key == 'id')? 'disabled id="disabledInput"':'id="inputSuccess1"'; ?>
-                                            id="disabledInput" value="<?= $value ?>"
-	                                        class="form-control" name="<?php echo $key ?>">
+		                                <div class="input-group">
+		                                    <div style="width: 200px;" class="input-group-addon"><?php echo $key ?></div>
+		                                    <input style='width:450px;' type="text" <?php echo ($key == 'id')? 'disabled id="disabledInput"':'id="inputSuccess1"'; ?>
+	                                            id="disabledInput" value="<?= $value ?>"
+		                                        class="form-control" name="<?php echo $key ?>">
 
-	                                </div>
+		                                </div>
 
-	                            </div>
-	                            <br><?
-	                    }?>
-	                    <input type="hidden" name="id" value="<?= $id ?>">
-	                    <button style="width: 650px; margin-top:15px;" type="submit" class="btn btn-default">Submit</button>
-	                </form>
-	            </div>
-	        </div>
-	    </div><?
+		                            </div>
+		                            <br><?
+		                    }?>
+		                    <input type="hidden" name="id" value="<?= $id ?>">
+		                    <button style="width: 650px; margin-top:15px;" type="submit" class="btn btn-default">Submit</button>
+		                </form>
+		            </div>
+		        </div>
+		    </div><?
+	    $content = ob_get_clean();
+	    return $content;
 	}
 
 
 	public function generate_form_insert_into($table_needed, $option = array("TYPE" => null, "CHAMPS" => array()))
 	{
-		if(strpos($table_needed, Config::$prefix_sql) === false)
-			$table_needed = Config::$prefix_sql.$table_needed;
+		if(Config::$prefix_sql != '')
+		{
+			if(strpos($table_needed, Config::$prefix_sql) === false)
+				$table_needed = Config::$prefix_sql.$table_needed;	
+		}
+		
 
 		$req_simply = new stdClass();
 		$req_simply->table = $table_needed;
