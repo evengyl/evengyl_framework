@@ -16,8 +16,11 @@ require_once "../app/includes/navigation.php";
 
 $_app->navigation = new navigation();
 
+
 start_exec_page_timer();
 
 //mise en route de l'autoload
 
 Autoloader::register(); 
+
+$_app->sql = new all_query();

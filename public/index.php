@@ -5,21 +5,14 @@
 
 //require de base avec les fonciton diverse et le loader, la fonction microtime est la uniquement pour le temps d'execution des requete pour optimiser
 require "../app/includes/app_min_load.php";
-
+//va être appeler a chaque démarage de script page et va checker si le user est connecter ou pas.
+new security($_app);
 //mise en route de la session
-
 
 if(!isset($_GET['page']))
 	$_GET['page'] = 'home';
 
-ob_start();
-
-
-//va être appeler a chaque démarage de script page et va checker si le user est connecter ou pas.
-new security($_app);
-
-?>
-
+ob_start();?>
 
 <html lang="Fr-be">
 	<head>

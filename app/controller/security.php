@@ -4,10 +4,12 @@ Class security extends base_module
 {
 	public $sql = "";
 	public function __construct(&$_app)
-	{		
-		$this->sql = new all_query();
+	{
+		if(!isset($_app->sql))		
+			$_app->sql = new all_query();
+		
 		$_app->module_name = __CLASS__;
-		parent::__construct($_app, $sql);
+		parent::__construct($_app);
 
 		//va checker a chaque page si on est bien logger
 		if(isset($_POST['return_form_complet']) || isset($_POST['return_form_complet_lost_login'])) 

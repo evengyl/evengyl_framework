@@ -14,15 +14,13 @@ class all_query extends _db_connect
 	public function __construct()
 	{
 		if(Config::$prefix_sql != '')
-		{
 			$this->table = Config::$prefix_sql;
-		}
 	}
+
 	public function select($req_sql)
 	{
 		$req_sql->table = $this->table.$req_sql->table;	
 		
-
 		$select =  new select($req_sql);
 		$construct_req = $select->get_string();
 
@@ -48,8 +46,8 @@ class all_query extends _db_connect
 
 		$req_sql->table = $this->table.$req_sql->table;	
 
-		$toute_les_colonnes = "";
-		$toute_les_valeurs = "";
+		$columns = "";
+		$values = "";
 
 		foreach($req_sql->ctx as $nom_colonne => $valeur)
 		{			
@@ -58,14 +56,14 @@ class all_query extends _db_connect
 			if($nom_colonne == "id")
 				$valeur = intval($valeur);
 
-			$toute_les_colonnes = $toute_les_colonnes.', '.$nom_colonne;
-			$toute_les_valeurs = $toute_les_valeurs.', "'.$valeur.'"';			
+			$columns = $columns.', '.$nom_colonne;
+			$values = $values.', "'.$valeur.'"';			
 		}
 
-		$toute_les_colonnes = substr($toute_les_colonnes,2);
+		$columns = substr($columns,2);
 
-		$toute_les_valeurs = substr($toute_les_valeurs,2);
-		$req_sql = "INSERT INTO ".$req_sql->table." (".$toute_les_colonnes.") VALUES (".$toute_les_valeurs.")";
+		$values = substr($values,2);
+		$req_sql = "INSERT INTO ".$req_sql->table." (".$columns.") VALUES (".$values.")";
 
 		parent::query($req_sql);
 		unset($req_sql);

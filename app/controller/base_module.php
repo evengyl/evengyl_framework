@@ -13,12 +13,14 @@ Class base_module
 	public $sql;
 	public $_app;
 
-	public function __construct(&$_app, &$sql = "")
+	public function __construct(&$_app)
 	{
 		$this->_app = &$_app;
 
-		if($sql != "")
-			$this->sql = &$sql;
+		if($_app->sql != "")
+			$this->sql = &$_app->sql;
+		else
+			$this->sql = new all_query();
 
 		if(Config::$is_connect)
 		{
